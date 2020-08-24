@@ -23,6 +23,8 @@
             $error = $controller->model->db->getLastError();
             echo "Error: {$error}";
         }
+    } else {
+        echo "Error: validation failed, check if the password confirmation is correct and try again, please";
     }
 
     $view = new UserView();

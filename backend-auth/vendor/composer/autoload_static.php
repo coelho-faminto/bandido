@@ -11,9 +11,25 @@ class ComposerStaticInit25da181e45d5b4de6e7c3147bfa70898
         '94df122b6b32ca0be78d482c26e5ce00' => __DIR__ . '/..' . '/joshcam/mysqli-database-class/dbObject.php',
     );
 
+    public static $prefixLengthsPsr4 = array (
+        'F' => 
+        array (
+            'Firebase\\JWT\\' => 13,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Firebase\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
+        ),
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit25da181e45d5b4de6e7c3147bfa70898::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit25da181e45d5b4de6e7c3147bfa70898::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }
