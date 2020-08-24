@@ -9,8 +9,8 @@ function _fetch(method, service, json, authorization = false) {
     }
 
     if (
-        (method == 'GET') ||
-        (method == 'HEAD')
+        (method === 'GET') ||
+        (method === 'HEAD')
     ) {
         requestOptions = {
             method: method,

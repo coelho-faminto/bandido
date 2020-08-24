@@ -29,7 +29,7 @@ const WidgetsDropdown = (props) => {
             console.log(data)
             _setClientes(data.length)
         })
-    }, [])
+    })
 
     const onClick_MaisInformacoes = (event) => {
         let _clientes = clientes
