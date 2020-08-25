@@ -21,7 +21,7 @@ class App extends Component {
     constructor(props) {
         super(props)
 
-        const jwt = localStorage.getItem('jwt')
+        const jwt = localStorage.getItem('jwt') != "false"
 
         this.state = {
             authJwt: jwt ? jwt : false
@@ -40,6 +40,8 @@ class App extends Component {
     }
 
     onLogout() {
+        console.log('logging out')
+
         localStorage.setItem('jwt', false)
         this.setState({authJwt: false})
     }

@@ -1,8 +1,9 @@
-const API_URL = 'http://localhost:1337'
+const API_URL = 'http://localhost/MEGA/coding/react-admin-panel/v0.1.1/backend-auth'
 
 function _fetch(method, service, json, authorization = false) {
     let requestOptions = {}
-    let headers = { 'Content-Type': 'application/json' }
+    let headers = {}
+    //let headers = { 'Content-Type': 'application/json' }
 
     if (authorization) {
         headers = { ...headers, 'Authorization': `Bearer ${authorization}` }

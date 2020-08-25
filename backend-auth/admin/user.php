@@ -16,7 +16,7 @@
     $messages = [];
 
     $controller = new UserController();
-    if ($controller->validate()) {
+    if ($controller->validate($_POST)) {
         $insert_id = $controller->insert();
         if ($insert_id) {
             $messages[] = "User added successfully, id: {$insert_id}";
@@ -50,6 +50,7 @@
             margin: 0;
             padding: 0;
             max-width: 100%;
+            background-color: #333;
         }
 
         form,
@@ -59,11 +60,12 @@
 
         form {
             font-size: 10pt;
-            width: 320px;
+            width: 100%;
             margin: 0 auto;
             margin-top: 0.333rem;
             padding: 0.666rem 1.333rem;
-            background-color: lightslategray;
+            background-color: #222;
+            max-width: 1200px;
             border-radius: 0.333rem;
         }
 
@@ -86,22 +88,48 @@
         form input[type='password'] {
             padding: 0.333rem;
             border: none;
-            border-bottom: 1px solid #9dabbd;
+            border-bottom: 1px solid #333;
             background-color: unset;
+            margin-bottom: 1.666rem;
+            color: paleturquoise;
         }
 
         form label {
             font-weight: bold;
         }
 
+        .myButton {
+            box-shadow: inset 0px 1px 0px 0px #54a3f7;
+            background: linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+            background-color: #007dc1;
+            border-radius: 3px;
+            border: 1px solid #124d77;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            font-size: 13px;
+            padding: 6px 24px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #154682;
+        }
+
+        .myButton:hover {
+            background: linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+            background-color: #0061a7;
+        }
+
+        .myButton:active {
+            position: relative;
+            top: 1px;
+        }
+
         form button {
             margin-left: auto;
-            padding: 0.133rem 1.333rem;
-            cursor: pointer;
         }
 
         form .message {
-            color: peachpuff;
+            color: paleturquoise;
             margin-bottom: 1.333rem;
             font-weight: bold;
         }
@@ -125,6 +153,10 @@
             max-width: 1200px;
             display: block;
         }
+
+        .text-right {
+            text-align: right;
+        }
     </style>
 
     <form action="" method="post">
@@ -147,7 +179,9 @@
         <input type="password" name="confirm-password" id="confirm-password">
         <label for="master-password">Master password</label>
         <input type="password" name="master-password" id="master-password">
-        <button type="submit">Save</button>
+        <div class="text-right">
+            <button type="submit" class="myButton">Save</button>
+        </div>
     </form>
 
     <div class="code">

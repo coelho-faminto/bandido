@@ -24,6 +24,10 @@ class Model
         return $this->db->orderBy(...$orderBy);
     }
 
+    public function getOne($columns) {
+        return $this->db->getOne($this->table_name, $columns);
+    }
+
     public function list()
     {
         return $this->db->get($this->table_name);

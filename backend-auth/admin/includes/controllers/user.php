@@ -20,22 +20,34 @@ class UserController
         return $this->model->insert($data);
     }
 
-    public function validate()
+    public function validateUsernameAndPassword($data)
     {
         if (
-            (empty($_POST['username'])) ||
-            (empty($_POST['password'])) ||
-            (empty($_POST['confirm-password'])) ||
-            (empty($_POST['master-password']))
+            (empty($data['username'])) ||
+            (empty($data['password']))
         ) {
             return false;
         }
 
-        if ($_POST['password'] !== $_POST['confirm-password']) {
+        return true;
+    }
+
+    public function validate($data)
+    {
+        if (
+            (empty($data['username'])) ||
+            (empty($data['password'])) ||
+            (empty($data['confirm-password'])) ||
+            (empty($data['master-password']))
+        ) {
             return false;
         }
 
-        if (hash('sha256', $_POST['master-password']) !== '52ac30f1ef11050e8f8f62a4a3b304927dadc561927a9a008cf35b9670cf1b57') {
+        if ($data['password'] !== $data['confirm-password']) {
+            return false;
+        }
+
+        if (hash('sha256', $data['master-password']) !== '52ac30f1ef11050e8f8f62a4a3b304927dadc561927a9a008cf35b9670cf1b57') {
             return false;
         }
 

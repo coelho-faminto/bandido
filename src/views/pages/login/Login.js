@@ -17,6 +17,7 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import _fetch from './../../../communication'
+import { v4 as uuidv4 } from 'uuid'
 
 const Login = (props) => {
     const history = useHistory()
@@ -26,6 +27,12 @@ const Login = (props) => {
     const [errors, _setErrors] = useState([])
     const [loginSuccess, _setLoginSuccess] = useState(false)
 
+    const onCloseButton = (visible) => {
+        if (!visible) {
+            _setErrors([])
+        }
+    }
+
     const onSubmit_Login = (event) => {
         const _username = username
         const _password = password
@@ -34,19 +41,17 @@ const Login = (props) => {
 
         _fetch(
             'POST',
-            '/auth/local',
+            '/auth.php',
             {
-                identifier: _username,
+                username: _username,
                 password: _password
             }
         ).then((response) => response.json()).then((data) => {
             console.log(data)
 
-            if (data.error) {
-                data.message.forEach((v) => {
-                    if (typeof v.messages.forEach == 'function') {
-                        _setErrors([...errors, ...v.messages])
-                    }
+            if ((data.error) && (typeof data.messages.forEach == 'function')) {
+                data.messages.forEach(v => {
+                    _setErrors([...errors, v])
                 })
             }
             else if (
@@ -54,10 +59,10 @@ const Login = (props) => {
                 (typeof data.jwt != 'undefined')
             ) {
                 _setLoginSuccess(true)
-                
+
                 props.authenticate(data.jwt, data.user)
 
-                console.log('redirecting...')        
+                console.log('redirecting...')
                 history.push('/')
             }
         })
@@ -80,25 +85,27 @@ const Login = (props) => {
                         <CCardGroup>
                             <CCard className="p-4">
                                 <CCardBody>
-                                    <CForm onSubmit={onSubmit_Login}>
-                                        <h1>Login</h1>
-                                        <p className="text-muted">Entre na sua conta</p>
-                                        {
-                                            errors.map((v) => {
-                                                return (
-                                                    <CAlert key={v.id} color="danger" closeButton>
-                                                        {v.message}
-                                                    </CAlert>
-                                                )
-                                            })
-                                        }
-                                        {
-                                            loginSuccess ?
-                                                <CAlert color="success" closeButton>
-                                                    Usuário identificado com sucesso, você será redirecionado em alguns segundos...
+
+                                    <h1>Login</h1>
+                                    <p className="text-muted">Entre na sua conta</p>
+                                    {
+                                        errors.map((v) => {
+                                            const id = uuidv4()
+                                            return (
+                                                <CAlert key={id} color="danger" closeButton onShowChange={onCloseButton}>
+                                                    {v}
+                                                </CAlert>
+                                            )
+                                        })
+                                    }
+                                    {
+                                        loginSuccess ?
+                                            <CAlert color="success" closeButton>
+                                                Usuário identificado com sucesso, você será redirecionado em alguns segundos...
                                                 </CAlert> :
-                                                null
-                                        }
+                                            null
+                                    }
+                                    <CForm onSubmit={onSubmit_Login}>
                                         <CInputGroup className="mb-3">
                                             <CInputGroupPrepend>
                                                 <CInputGroupText>

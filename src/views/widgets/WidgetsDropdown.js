@@ -42,9 +42,9 @@ const WidgetsDropdown = (props) => {
         <CRow>
             <CCol sm="12" lg="12">
                 <CJumbotron>
-                    <h1 className="display-3">Crime Boss 2.0</h1>
-                    <p className="lead">Nova versão do Crime Boss foi iniciada no ano de 2020 com olhos em novos horizontes</p>
-                    <p>Em breve um painel diferenciado</p>
+                    <h1 className="display-3">EVOLVED-THIEF</h1>
+                    <p className="lead">Novos trabalhos foram iniciados no ano de 2020 com olhos em novos horizontes</p>
+                    <p>Painel em construção...</p>
                     <CButton onClick={onClick_MaisInformacoes} color="primary" href="#" target="_blank">Mais informações</CButton>
                 </CJumbotron>
             </CCol>
