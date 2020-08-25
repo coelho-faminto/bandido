@@ -21,10 +21,10 @@ class App extends Component {
     constructor(props) {
         super(props)
 
-        const jwt = localStorage.getItem('jwt') != "false"
+        const jwt = localStorage.getItem('jwt')
 
         this.state = {
-            authJwt: jwt ? jwt : false
+            authJwt: jwt !== 'false' ? jwt : false
         }
 
         console.log('constructor called')

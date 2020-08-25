@@ -53,7 +53,7 @@ function getBearerToken()
 
 $error_messages = [];
 $messages = [];
-$user = false;
+$response = [];
 
 function output($message, $error = false)
 {
@@ -87,6 +87,8 @@ function file_post_contents($url, $data, $method = 'POST', $authorization = fals
 
 function process_input()
 {
+    global $response;
+
     try {
         $obj = file_get_contents('php://input');
 
@@ -107,9 +109,13 @@ function process_input()
             throw new \Exception('Parâmetros insuficientes');
         }
 
-        return file_post_contents(SERVER_URL, $json['data']);
+        $response = file_post_contents(SERVER_URL, $json);
+
+        output('Requisição processada com sucesso');
+
+        return true;
     } catch (\Exception $e) {
-        output('Erro: ' . $e->getMessage(), true);
+        output('Erro na requisição: ' . $e->getMessage(), true);
 
         return false;
     }
@@ -129,16 +135,17 @@ function process_request()
 
     // auth ok, forward request to main server
 
-    var_dump(process_input());
+    process_input();
 }
 
 function show()
 {
-    global $error_messages, $messages, $user;
+    global $error_messages, $messages, $response;
 
     if (!empty($error_messages)) {
         $output = [
             'error' => true,
+            'isAPI' => false,
             'messages' => $error_messages
         ];
         echo json_encode($output);
@@ -146,7 +153,21 @@ function show()
         return true;
     }
 
+    if (!empty($messages)) {
+        echo $response;
+
+        return true;
+    }
+
     return false;
+}
+
+header('Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Origin: *');
+
+if ($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {
+    header('Content-type: application/json');
 }
 
 process_request();

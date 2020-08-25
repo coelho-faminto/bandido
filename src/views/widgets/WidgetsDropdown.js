@@ -13,30 +13,22 @@ import {
 import CIcon from '@coreui/icons-react'
 import ChartLineSimple from '../charts/ChartLineSimple'
 import ChartBarSimple from '../charts/ChartBarSimple'
-import _fetch from '../../communication'
+import { _apiRequest } from '../../communication'
 
 const WidgetsDropdown = (props) => {
-    const [clientes, _setClientes] = useState(100)
+    const [clientes, _setClientes] = useState(false)
 
     useEffect(() => {
         console.log(`JWT => ${props.jwt}`)
-        _fetch(
-            'GET',
-            '/bots',
-            {},
-            props.jwt
-        ).then(response => response.json()).then(data => {
-            console.log(data)
-            _setClientes(data.length)
+        _apiRequest('getClientsCount', {}, props.jwt).then((response) => {
+            console.log(response)
+            _setClientes(response[0].count)
         })
-    })
+    }, [props.jwt])
 
     const onClick_MaisInformacoes = (event) => {
-        let _clientes = clientes
-        _setClientes(clientes + 1)
+        console.log('mais informações')
     }
-
-    //const
 
     return (
         <CRow>
@@ -52,7 +44,7 @@ const WidgetsDropdown = (props) => {
             <CCol sm="6" lg="3">
                 <CWidgetDropdown
                     color="gradient-primary"
-                    header={clientes.toString()}
+                    header={clientes === false ? 'carregando...' : `${clientes}`}
                     text="Clientes cadastrados"
                     footerSlot={
                         <ChartLineSimple

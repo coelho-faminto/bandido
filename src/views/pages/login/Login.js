@@ -16,7 +16,7 @@ import {
     CAlert
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import _fetch from './../../../communication'
+import { _fetch } from './../../../communication'
 import { v4 as uuidv4 } from 'uuid'
 
 const Login = (props) => {

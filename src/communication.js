@@ -1,6 +1,6 @@
 const API_URL = 'http://localhost/MEGA/coding/react-admin-panel/v0.1.1/backend-auth'
 
-function _fetch(method, service, json, authorization = false) {
+export function _fetch(method, service, json, authorization = false) {
     let requestOptions = {}
     let headers = {}
     //let headers = { 'Content-Type': 'application/json' }
@@ -29,4 +29,25 @@ function _fetch(method, service, json, authorization = false) {
     return fetch(`${API_URL}${service}`, requestOptions)
 }
 
-export default _fetch;
+export function _apiRequest(request, data, jwt) {
+    return new Promise((resolve, reject) => {
+        _fetch(
+            'POST',
+            '/api.php',
+            {
+                request: request,
+                data: data
+            },
+            jwt
+        ).then(response => response.json()).then(data => {
+            if (data.error) {
+                reject(data)
+                return
+            }
+
+            resolve(data.response)
+        })
+    })
+}
+
+export default { _fetch, _apiRequest }
