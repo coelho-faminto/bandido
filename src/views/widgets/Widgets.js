@@ -19,10 +19,10 @@ import ChartBarSimple from '../charts/ChartBarSimple'
 
 import CIcon from '@coreui/icons-react'
 
-const Widgets = () => {
+const Widgets = (props) => {
   return (
     <>
-      <WidgetsDropdown />
+      <WidgetsDropdown {...props} />
       <CRow>
         <CCol xs="12" sm="6" lg="3">
           <CWidgetProgress color="success" header="89.9%" text="Lorem ipsum..." footer="Lorem ipsum dolor sit amet enim."/>

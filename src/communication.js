@@ -46,7 +46,7 @@ export function _apiRequest(request, data, jwt) {
             }
 
             resolve(data.response)
-        })
+        }).catch((e) => reject(e))
     })
 }
 
